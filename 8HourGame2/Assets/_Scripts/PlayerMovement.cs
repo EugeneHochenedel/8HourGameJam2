@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
 	public float Velocity;
 
 	public float CameraSensitivity;
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update()
+	{
 		float VerticalLook = -Input.GetAxis("Mouse Y") * CameraSensitivity;
 		transform.Rotate(VerticalLook, 0, 0);
 
@@ -25,14 +27,17 @@ public class PlayerMovement : MonoBehaviour {
 
 		float StrafeMove = Input.GetAxis("Horizontal") * Velocity;
 
-		float VertMove = Input.GetAxis("Jump") * Velocity;
+	//	float VertMove = Input.GetAxis("Jump") * Velocity;
 
-		Vector3 speed = new Vector3(StrafeMove, VertMove, ForwardMove);
+		if (Input.GetKey("space"))
+		{
+			gameObject.transform.position = new Vector3(0, Time.deltaTime * Velocity * 5, 0);
+		}
+
+		Vector3 speed = new Vector3(StrafeMove, 0, ForwardMove);
 		speed = transform.localRotation * speed;
 
 		CharacterController playerMove = GetComponent<CharacterController>();
 		playerMove.Move(speed);
-
-
 	}
 }
